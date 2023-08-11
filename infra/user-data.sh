@@ -73,7 +73,7 @@ docker run \
     --restart unless-stopped \
     $LOGGING \
     --net aredn-net --ip ${node_ip} \
-    ghcr.io/usa-reddragon/aredn-virtual-node:main
+    ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
     -d \
