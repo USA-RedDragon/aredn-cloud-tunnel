@@ -2,7 +2,7 @@ FROM ghcr.io/usa-reddragon/aredn-base:main
 
 COPY --from=ghcr.io/usa-reddragon/aredn-manager:v0.0.1 /aredn-manager /usr/bin/aredn-manager
 RUN chmod a+x /usr/bin/aredn-manager
-COPY --from=ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.1 /app/dist /www/aredn-manager
+COPY --from=ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.1 /usr/share/nginx/html /www/aredn-manager
 
 RUN apk add --no-cache \
     nginx
