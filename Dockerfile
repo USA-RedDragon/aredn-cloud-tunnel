@@ -1,4 +1,4 @@
-FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.2 as aredn-manager
+FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.3 as aredn-manager
 FROM ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.2 as aredn-manager-frontend
 FROM ghcr.io/usa-reddragon/aredn-base:main
 
