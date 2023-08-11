@@ -43,7 +43,7 @@ data "aws_ami" "ubuntu-jammy" {
 
 resource "aws_eip" "ip" {
   instance = aws_instance.node.id
-  vpc      = true
+  domain   = "vpc"
 }
 
 # Create an IAM policy allowing EC2 to create Cloudwatch log entries
