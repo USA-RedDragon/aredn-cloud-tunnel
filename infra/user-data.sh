@@ -36,7 +36,6 @@ chmod -R g+w /docker-data/netdata
 
 CH="http://${server_name}.local.mesh:81${extra_cors_hosts}"
 
-# If ${supernode} is set
 if [[ "${supernode_zone}" != "" ]]; then
     # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
     CH="$CH,http://${server_name}.${supernode_zone}.mesh:81"
@@ -44,7 +43,6 @@ fi
 
 CH_SUPERNODE="http://${server_name}_supernode.local.mesh:81${extra_supernode_cors_hosts}"
 
-# If ${supernode} is set
 if [[ "${supernode_zone}" != "" ]]; then
     # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
     CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}_supernode.${supernode_zone}.mesh:81"
