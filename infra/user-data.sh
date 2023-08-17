@@ -19,7 +19,6 @@ usermod -aG docker ubuntu
 docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
 docker network create --subnet=10.54.25.0/24 aredn-net
-docker network create --subnet=10.54.26.0/24 supernode-net
 
 LOGGING="--log-driver=awslogs --log-opt awslogs-region=${region} --log-opt awslogs-group=${awslogs-group} --log-opt awslogs-create-group=true"
 
@@ -49,7 +48,7 @@ if [[ "${supernode_zone}" != "" ]]; then
     CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}_supernode.${supernode_zone}.mesh:81"
 fi
 
-export NODE_IP_PLUS_1=$(echo ${node_ip} | awk -F. '{print $1"."$2"."$3+1"."$4}')
+export NODE_IP_PLUS_1=$(echo ${node_ip} | awk -F. '{print $1"."$2"."$3"."$4+1}')
 
 # Run the Docker image
 docker run \
@@ -74,7 +73,7 @@ docker run \
     -d \
     --restart unless-stopped \
     $LOGGING \
-    --net supernode-net --ip $NODE_IP_PLUS_1 \
+    --net aredn-net --ip $NODE_IP_PLUS_1 \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
