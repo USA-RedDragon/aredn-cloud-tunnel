@@ -42,6 +42,14 @@ if [[ "${supernode}" != "" ]]; then
     CH="$CH,http://${server_name}.${supernode_zone}.mesh:81"
 fi
 
+CH_SUPERNODE="http://${server_name}_supernode.local.mesh:81${extra_supernode_cors_hosts}"
+
+# If ${supernode} is set
+if [[ "${supernode}" != "" ]]; then
+    # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
+    CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}_supernode.${supernode_zone}.mesh:81"
+fi
+
 # Run the Docker image
 docker run \
     --cap-add=NET_ADMIN \
@@ -56,7 +64,6 @@ docker run \
     -e CORS_HOSTS="$CH" \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
     -e SERVER_NAME=${server_name} \
-    -e SUPERNODE="${supernode}" \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
@@ -64,7 +71,6 @@ docker run \
     -e WIREGUARD_PEER_PUBLICKEY=${wireguard_peer_publickey} \
     -e WIREGUARD_SERVER_PRIVATEKEY=${wireguard_server_privatekey} \
     -e NODE_IP=${node_ip} \
-    -e SUPERNODE_ZONE=${supernode_zone} \
     --device /dev/net/tun \
     --name ${server_name} \
     -p 5525:5525 \

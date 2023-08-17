@@ -123,3 +123,9 @@ variable "supernode" {
   default     = ""
   description = "set at all to enable supernode support"
 }
+
+variable "extra_supernode_cors_hosts" {
+  sensitive   = true
+  default     = ""
+  description = "The extra CORS hosts for supernode"
+}
