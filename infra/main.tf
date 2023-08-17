@@ -150,7 +150,6 @@ resource "aws_instance" "node" {
     password_salt               = var.password_salt
     extra_cors_hosts            = var.extra_cors_hosts
     init_admin_user_password    = var.init_admin_user_password
-    supernode                   = var.supernode
     extra_supernode_cors_hosts  = var.extra_supernode_cors_hosts
   })
   user_data_replace_on_change = true

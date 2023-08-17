@@ -37,7 +37,7 @@ chmod -R g+w /docker-data/netdata
 CH="http://${server_name}.local.mesh:81${extra_cors_hosts}"
 
 # If ${supernode} is set
-if [[ "${supernode}" != "" ]]; then
+if [[ "${supernode_zone}" != "" ]]; then
     # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
     CH="$CH,http://${server_name}.${supernode_zone}.mesh:81"
 fi
@@ -45,12 +45,39 @@ fi
 CH_SUPERNODE="http://${server_name}_supernode.local.mesh:81${extra_supernode_cors_hosts}"
 
 # If ${supernode} is set
-if [[ "${supernode}" != "" ]]; then
+if [[ "${supernode_zone}" != "" ]]; then
     # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
     CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}_supernode.${supernode_zone}.mesh:81"
 fi
 
+export NODE_IP_PLUS_1=$(echo ${node_ip} | awk -F. '{print $1"."$2"."$3"."$4+1}')
+
 # Run the Docker image
+docker run \
+    --cap-add=NET_ADMIN \
+    --privileged \
+    -e PG_HOST='${pg_host}' \
+    -e PG_USER='${pg_user}' \
+    -e PG_PASSWORD='${pg_pass}' \
+    -e PG_DATABASE='${pg_db}_supernode' \
+    -e SESSION_SECRET='${session_secret}' \
+    -e PASSWORD_SALT='${password_salt}' \
+    -e CORS_HOSTS="$CH_SUPERNODE" \
+    -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
+    -e SERVER_NAME=${server_name}-supernode \
+    -e NODE_IP=$NODE_IP_PLUS_1 \
+    -e DISABLE_MAP=1 \
+    -e SUPERNODE=1 \
+    -e SUPERNODE_ZONE=${supernode_zone} \
+    --device /dev/net/tun \
+    --name ${server_name}-supernode \
+    -p 5526:5525 \
+    -d \
+    --restart unless-stopped \
+    $LOGGING \
+    --net aredn-net --ip $NODE_IP_PLUS_1 \
+    ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
+
 docker run \
     --cap-add=NET_ADMIN \
     --privileged \

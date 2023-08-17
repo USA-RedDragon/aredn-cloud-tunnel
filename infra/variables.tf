@@ -119,11 +119,6 @@ variable "init_admin_user_password" {
   description = "The initial admin user password"
 }
 
-variable "supernode" {
-  default     = ""
-  description = "set at all to enable supernode support"
-}
-
 variable "extra_supernode_cors_hosts" {
   sensitive   = true
   default     = ""
