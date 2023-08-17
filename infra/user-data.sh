@@ -64,7 +64,11 @@ docker run \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
     -e SERVER_NAME=${server_name}-supernode \
     -e NODE_IP=$NODE_IP_PLUS_1 \
-    -e DISABLE_MAP=1 \
+    -e MAP_CONFIG='${map_config_json}' \
+    -e SERVER_NAME=${server_name} \
+    -e SERVER_LON='${server_lon}' \
+    -e SERVER_LAT='${server_lat}' \
+    -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SUPERNODE=1 \
     -e SUPERNODE_ZONE=${supernode_zone} \
     --device /dev/net/tun \
@@ -79,7 +83,6 @@ docker run \
 docker run \
     --cap-add=NET_ADMIN \
     --privileged \
-    -e MAP_CONFIG='${map_config_json}' \
     -e PG_HOST='${pg_host}' \
     -e PG_USER='${pg_user}' \
     -e PG_PASSWORD='${pg_pass}' \
@@ -88,10 +91,7 @@ docker run \
     -e PASSWORD_SALT='${password_salt}' \
     -e CORS_HOSTS="$CH" \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
-    -e SERVER_NAME=${server_name} \
-    -e SERVER_LON='${server_lon}' \
-    -e SERVER_LAT='${server_lat}' \
-    -e SERVER_GRIDSQUARE=${server_gridsquare} \
+    -e DISABLE_MAP=1 \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
     -e WIREGUARD_PEER_PUBLICKEY=${wireguard_peer_publickey} \
     -e WIREGUARD_SERVER_PRIVATEKEY=${wireguard_server_privatekey} \
