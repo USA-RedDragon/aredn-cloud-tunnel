@@ -238,6 +238,8 @@ async function getLinkInfo() {
         // If ifName starts with "tun", then it is a tunnel
         if (link.ifName.startsWith('tun')) {
             newObj.linkType = 'TUN';
+        } else if (link.ifName.startsWith('eth')) {
+            newObj.linkType = 'DTD';
         } else {
             console.log(`Unknown link type: ${link.ifName}`);
             newObj.linkType = 'UNKNOWN';
