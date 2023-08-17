@@ -65,7 +65,6 @@ docker run \
     -e SERVER_NAME=${server_name}-supernode \
     -e NODE_IP=$NODE_IP_PLUS_1 \
     -e MAP_CONFIG='${map_config_json}' \
-    -e SERVER_NAME=${server_name} \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
@@ -92,6 +91,7 @@ docker run \
     -e CORS_HOSTS="$CH" \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
     -e DISABLE_MAP=1 \
+    -e SERVER_NAME=${server_name} \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
     -e WIREGUARD_PEER_PUBLICKEY=${wireguard_peer_publickey} \
     -e WIREGUARD_SERVER_PRIVATEKEY=${wireguard_server_privatekey} \
