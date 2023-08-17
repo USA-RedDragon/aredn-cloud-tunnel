@@ -77,6 +77,12 @@ aredn-manager -d generate
 # We need the syslog started early
 rsyslogd -n &
 
+cat <<EOF > /tmp/resolv.conf.auto
+nameserver 127.0.0.11
+options ndots:0
+EOF
+
+# Use the dnsmasq that's about to run
 echo -e 'search local.mesh\nnameserver 127.0.0.1' > /etc/resolv.conf
 
 exec s6-svscan /etc/s6
