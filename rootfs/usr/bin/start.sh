@@ -59,9 +59,6 @@ if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
 
     # Cross-VPN traffic OK
     iptables -A FORWARD -i wg0 -o wg0 -j ACCEPT
-    # No internet access for the VPN clients
-    iptables -A FORWARD -i wg0 -o eth0 -j REJECT
-    iptables -A FORWARD -i eth0 -o wg0 -j REJECT
 
     iptables -t mangle -A PREROUTING -i wg0 -j MARK --set-mark 0x30
     iptables -t nat -A POSTROUTING ! -o wg0 -m mark --mark 0x30 -j MASQUERADE
