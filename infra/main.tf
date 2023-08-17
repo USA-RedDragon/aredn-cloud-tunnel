@@ -195,6 +195,13 @@ resource "aws_security_group" "allow-vpn" {
   }
 
   ingress {
+    from_port   = 5526
+    to_port     = 5526
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 51820
     to_port     = 51820
     protocol    = "udp"
