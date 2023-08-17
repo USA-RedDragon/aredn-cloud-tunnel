@@ -10,33 +10,36 @@ if [ -z "$SERVER_NAME" ]; then
     exit 1
 fi
 
-if [ -z "$MAP_CONFIG" ]; then
+# If map config is not provided and disable_map is not set, exit
+if [ -z "$MAP_CONFIG" && -z "$DISABLE_MAP" ]; then
     echo "No meshmap configuration JSON provided, exiting"
     exit 1
 fi
 
-if [ -z "$SERVER_LON" ]; then
+if [ -z "$SERVER_LON" && -z "$DISABLE_MAP" ]; then
     echo "No server longitude provided, exiting"
     exit 1
 fi
 
-if [ -z "$SERVER_LAT" ]; then
+if [ -z "$SERVER_LAT" && -z "$DISABLE_MAP" ]; then
     echo "No server latitude provided, exiting"
     exit 1
 fi
 
-if [ -z "$SERVER_GRIDSQUARE" ]; then
+if [ -z "$SERVER_GRIDSQUARE" && -z "$DISABLE_MAP" ]; then
     echo "No server gridsquare provided, exiting"
     exit 1
 fi
 
 
-echo "$MAP_CONFIG" > /meshmap/public/appConfig.json
+if [ -z "$DISABLE_MAP" ]; then
+    echo "$MAP_CONFIG" > /meshmap/public/appConfig.json
 
-cd /meshmap
-npm run build
-cp -r /meshmap/dist/* /www/map
-chmod a+x /www/map
+    cd /meshmap
+    npm run build
+    cp -r /meshmap/dist/* /www/map
+    chmod a+x /www/map
+fi
 
 if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
     export WG_TAP_PLUS_1=$(echo $WIREGUARD_TAP_ADDRESS | awk -F. '{print $1"."$2"."$3"."$4+1}')
