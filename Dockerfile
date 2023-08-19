@@ -7,8 +7,13 @@ RUN chmod a+x /usr/bin/aredn-manager
 
 COPY --from=aredn-manager-frontend /usr/share/nginx/html /www/aredn-manager
 
+RUN mkdir -p /www/map/data
+
 RUN apk add --no-cache \
-    nginx
+    nginx \
+    cronie
+
+RUN (crontab -l ; echo "30 * * * * node /meshmap/walk.js") | crontab -
 
 # Install API dependencies
 COPY legacy-node-api /api

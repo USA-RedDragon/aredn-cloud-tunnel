@@ -16,12 +16,12 @@ if [ -z "$MAP_CONFIG" && -z "$DISABLE_MAP" ]; then
     exit 1
 fi
 
-if [ -z "$SERVER_LON" && -z "$DISABLE_MAP" ]; then
+if [ -z "$SERVER_LON" ]; then
     echo "No server longitude provided, exiting"
     exit 1
 fi
 
-if [ -z "$SERVER_LAT" && -z "$DISABLE_MAP" ]; then
+if [ -z "$SERVER_LAT" ]; then
     echo "No server latitude provided, exiting"
     exit 1
 fi
@@ -39,6 +39,8 @@ if [ -z "$DISABLE_MAP" ]; then
     npm run build
     cp -r /meshmap/dist/* /www/map
     chmod a+x /www/map
+    chmod a+x /www/map/data
+    node /meshmap/walk.js
 fi
 
 if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
