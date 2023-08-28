@@ -70,6 +70,7 @@ docker run \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SUPERNODE=1 \
     -e SUPERNODE_ZONE=${supernode_zone} \
+    -e VTUN_STARTING_ADDRESS=${vtun_starting_address_supernode} \
     --device /dev/net/tun \
     --name ${server_name}-supernode \
     -p 5526:5525 \
@@ -97,6 +98,7 @@ docker run \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
     -e WIREGUARD_PEER_PUBLICKEY=${wireguard_peer_publickey} \
     -e WIREGUARD_SERVER_PRIVATEKEY=${wireguard_server_privatekey} \
+    -e VTUN_STARTING_ADDRESS=${vtun_starting_address} \
     -e NODE_IP=${node_ip} \
     --device /dev/net/tun \
     --name ${server_name} \
@@ -115,8 +117,8 @@ docker run \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --restart=unless-stopped \
     containrrr/watchtower \
-    --cleanup
-
+    --cleanup \
+    --interval 3600
 
 docker run \
     --network=container:${server_name} \

@@ -124,3 +124,11 @@ variable "extra_supernode_cors_hosts" {
   default     = ""
   description = "The extra CORS hosts for supernode"
 }
+
+variable "vtun_starting_address" {
+  default = "172.31.180.16"
+}
+
+variable "vtun_starting_address_supernode" {
+  default = "172.30.180.16"
+}
