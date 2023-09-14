@@ -1,10 +1,8 @@
 terraform {
-  cloud {
-    organization = "Personal-McSwain"
-
-    workspaces {
-      name = "aredn-cloud-node"
-    }
+  backend "s3" {
+    bucket = "mcswain-dev-tf-states"
+    key    = "aredn-cloud-tunnel"
+    region = "us-east-1"
   }
   required_providers {
     aws = {
