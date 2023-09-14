@@ -27,3 +27,4 @@ EXPOSE 5525
 
 # Define default command.
 CMD ["bash", "/usr/bin/start.sh"]
+
