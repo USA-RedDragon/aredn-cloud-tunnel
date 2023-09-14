@@ -12,6 +12,10 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
+permissions:
+  id-token: write      # Required for aws-actions/configure-aws-credentials
+  contents: read       # Required for actions/checkout
+
 jobs:
   docker:
     runs-on: ubuntu-22.04
