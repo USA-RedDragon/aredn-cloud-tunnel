@@ -24,7 +24,7 @@ module.exports.GETSysinfo = (req, res) => {
         grid_square: process.env.SERVER_GRIDSQUARE,
         node: process.env.SERVER_NAME,
         node_details: {
-            mesh_supernode: !!process.env.SUPERNODE || false
+            mesh_supernode: !!process.env.SUPERNODE || false,
             description: 'AREDN Cloud Tunnel',
             model: 'Virtual',
             mesh_gateway: '1',
