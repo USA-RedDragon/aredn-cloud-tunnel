@@ -137,4 +137,3 @@ docker run \
     $LOGGING \
     --name netdata \
     netdata/netdata
-
