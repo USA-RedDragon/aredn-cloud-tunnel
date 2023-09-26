@@ -1,10 +1,10 @@
 variable "region" {
-  default     = "us-east-2"
+  default     = "us-east-1"
   description = "The AWS region to use for the infrastructure"
 }
 
 variable "instance-type" {
-  default     = "t3a.small"
+  default     = "t4g.micro"
   description = "The AWS instance type to use for the infrastructure"
 }
 
