@@ -30,7 +30,12 @@ data "aws_ami" "ubuntu-jammy" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-*-server-*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = [var.arch]
   }
 
   filter {
