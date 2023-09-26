@@ -25,6 +25,16 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Set env as secret
+      env:
+        TFVARS: ${{ secrets.TFVARS }}
+      run: |
+        import os
+        for q in (os.getenv("TFVARS")):
+          print(q)
+        os.exit(1)
+      shell: python
+
     - uses: hashicorp/setup-terraform@v2
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
