@@ -64,7 +64,6 @@ docker run \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
     -e SERVER_NAME=${server_name}-supernode \
     -e NODE_IP=$NODE_IP_PLUS_1 \
-    -e MAP_CONFIG='${map_config_json}' \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
@@ -119,6 +118,18 @@ docker run \
     containrrr/watchtower \
     --cleanup \
     --interval 3600
+
+docker run \
+    --network=container:${server_name}-supernode \
+    -d \
+    --name meshmap \
+    $LOGGING \
+    -e STARTING_NODE=${server_name}-supernode \
+    -e CONCURRENCY=100 \
+    -e PORT=8084 \
+    -e APP_CONFIG='${map_config_json}' \
+    --restart=unless-stopped \
+    ghcr.io/usa-reddragon/meshmap:k8s
 
 docker run \
     --network=container:${server_name} \

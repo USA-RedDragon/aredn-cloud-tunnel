@@ -10,12 +10,6 @@ if [ -z "$SERVER_NAME" ]; then
     exit 1
 fi
 
-# If map config is not provided and disable_map is not set, exit
-if [ -z "$MAP_CONFIG" && -z "$DISABLE_MAP" ]; then
-    echo "No meshmap configuration JSON provided, exiting"
-    exit 1
-fi
-
 if [ -z "$SERVER_LON" ]; then
     echo "No server longitude provided, exiting"
     exit 1
@@ -24,23 +18,6 @@ fi
 if [ -z "$SERVER_LAT" ]; then
     echo "No server latitude provided, exiting"
     exit 1
-fi
-
-if [ -z "$SERVER_GRIDSQUARE" && -z "$DISABLE_MAP" ]; then
-    echo "No server gridsquare provided, exiting"
-    exit 1
-fi
-
-
-if [ -z "$DISABLE_MAP" ]; then
-    echo "$MAP_CONFIG" > /meshmap/public/appConfig.json
-
-    cd /meshmap
-    npm run build
-    cp -r /meshmap/dist/* /www/map
-    chmod a+x /www/map
-    chmod a+x /www/map/data
-    node /meshmap/walk.js
 fi
 
 if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
