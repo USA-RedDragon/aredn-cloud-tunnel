@@ -90,9 +90,9 @@ docker run \
     -e PASSWORD_SALT='${password_salt}' \
     -e CORS_HOSTS="$CH" \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
-    -e DISABLE_MAP=1 \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
+    -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SERVER_NAME=${server_name} \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
     -e WIREGUARD_PEER_PUBLICKEY=${wireguard_peer_publickey} \
@@ -118,18 +118,6 @@ docker run \
     containrrr/watchtower \
     --cleanup \
     --interval 3600
-
-docker run \
-    --network=container:${server_name}-supernode \
-    -d \
-    --name meshmap \
-    $LOGGING \
-    -e STARTING_NODE=${server_name}-supernode \
-    -e CONCURRENCY=100 \
-    -e PORT=8084 \
-    -e APP_CONFIG='${map_config_json}' \
-    --restart=unless-stopped \
-    ghcr.io/usa-reddragon/meshmap:k8s
 
 docker run \
     --network=container:${server_name} \
