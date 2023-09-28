@@ -4,7 +4,7 @@ variable "region" {
 }
 
 variable "instance-type" {
-  default     = "t4g.small"
+  default     = "t4g.nano"
   description = "The AWS instance type to use for the infrastructure"
 }
 
