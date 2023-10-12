@@ -67,6 +67,7 @@ docker run \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
     -e DISABLE_MAP=1 \
+    -e METRICS_PORT='9001' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SUPERNODE=1 \
     -e SUPERNODE_ZONE=${supernode_zone} \
@@ -74,6 +75,7 @@ docker run \
     --device /dev/net/tun \
     --name ${server_name}-supernode \
     -p 5526:5525 \
+    -p 9001:9001 \
     -d \
     --restart unless-stopped \
     $LOGGING \
@@ -94,6 +96,7 @@ docker run \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
+    -e METRICS_PORT='9002' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SERVER_NAME=${server_name} \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
@@ -104,6 +107,7 @@ docker run \
     --device /dev/net/tun \
     --name ${server_name} \
     -p 5525:5525 \
+    -p 9002:9002 \
     -p 51820:51820/udp \
     -d \
     --restart unless-stopped \
