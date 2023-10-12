@@ -3,10 +3,6 @@ name: Check Terraform
 on:
   pull_request:
 
-defaults:
-  run:
-    working-directory: ./infra
-
 permissions:
   id-token: write      # Required for aws-actions/configure-aws-credentials
   contents: read       # Required for actions/checkout
@@ -19,6 +15,9 @@ concurrency:
 jobs:
   check-terraform:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./infra
     steps:
     - name: Checkout
       uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -80,7 +79,7 @@ jobs:
       with:
         result-encoding: string
         script: |
-          let comment = `## Terraform Checks\n\n`;
+          let comment = `## AWS Terraform Checks\n\n`;
 
           if ("${{ steps.fmt.outcome }}" == "success") {
             comment += `\n#### ✅ Terraform Format and Style Passed`;
@@ -153,7 +152,161 @@ jobs:
       with:
         comment-author: github-actions[bot]
         issue-number: ${{ github.event.pull_request.number }}
-        body-includes: '## Terraform Checks'
+        body-includes: '## AWS Terraform Checks'
+
+    - name: Create comment
+      if: github.event_name == 'pull_request'
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        edit-mode: replace
+        issue-number: ${{ github.event.pull_request.number }}
+        body: ${{ steps.github-script.outputs.result }}
+
+    - name: Error if failed
+      if: steps.fmt.outcome == 'failure' || steps.validate.outcome == 'failure' || steps.init.outcome == 'failure' || steps.plan.outcome == 'failure'
+      run: exit 1
+
+  check-gcp-terraform:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./infra-gcp
+    steps:
+    - name: Checkout
+      uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      with:
+        fetch-depth: 0
+
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::803205869942:role/github-actions-aredn-cloud-tunnel
+        aws-region: us-east-1
+
+    - name: Configure GCP Credentials
+      uses: google-github-actions/auth@v0.3.1
+      with:
+        create_credentials_file: 'true'
+        workload_identity_provider: 'projects/820302097205/locations/global/workloadIdentityPools/aredn-cloud-tunnel-gcp/providers/github'
+        service_account: 'oidc-service-account@supernode-401805.iam.gserviceaccount.com'
+
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      continue-on-error: true
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      continue-on-error: true
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+      continue-on-error: true
+
+    - name: Place secret variables
+      run: |
+        echo "${TFVARS}" | base64 -d > variables.tfvars
+      env:
+        TFVARS: ${{ secrets.GCP_TFVARS }}
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color -var-file=variables.tfvars
+      continue-on-error: true
+
+    - uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      id: github-script
+      env:
+        FMT: "${{ steps.fmt.outputs.stdout }}"
+        INIT: "${{ steps.init.outputs.stderr }}"
+        VALIDATE: "${{ steps.validate.outputs.stderr }}"
+        PLAN_ERR: "${{ steps.plan.outputs.stderr }}"
+        PLAN_OUT: "${{ steps.plan.outputs.stdout }}"
+      with:
+        result-encoding: string
+        script: |
+          let comment = `## GCP Terraform Checks\n\n`;
+
+          if ("${{ steps.fmt.outcome }}" == "success") {
+            comment += `\n#### ✅ Terraform Format and Style Passed`;
+          } else {
+            // Split the output into an array of strings
+            let fileList = process.env.FMT.split("\n");
+            // Remove any empty lines from the array
+            fileList = fileList.filter((item) => item.trim() !== "");
+            fileList = fileList.map((item) => `<li><code>${item}</code></li>\n`);
+            filesString = fileList.join("\n");
+            comment += `\n#### ❌ Terraform Format and Style Failed
+          <details>
+          <summary>Failed Files</summary>
+          <ul>
+            ${filesString}
+          </ul>
+          </details>\n`;
+          }
+
+          if ("${{ steps.init.outcome }}" == "success") {
+            comment += `\n#### ✅ Terraform Initialization Passed`;
+          } else {
+            comment += `\n#### ❌ Terraform Initialization Failed
+          <details>
+          <summary><code>terraform init</code> output</summary>
+          <pre>\n
+          ${process.env.INIT}
+          </pre>\n
+          </details>\n`;
+          }
+
+          if ("${{ steps.validate.outcome }}" == "success") {
+            comment += `\n#### ✅ Terraform Validation Passed`;
+          } else {
+            comment += `\n#### ❌ Terraform Validation Failed
+          <details>
+          <summary><code>terraform validate</code> output</summary>
+          <pre>\n
+          ${process.env.VALIDATE}
+          </pre>\n
+          </details>`;
+          }
+
+          if ("${{ steps.plan.outcome }}" == "success") {
+            comment += `\n#### ✅ Terraform Plan Passed`;
+          } else {
+            comment += `\n#### ❌ Terraform Plan Failed`;
+          }
+          comment += `
+          <details>
+          <summary><code>terraform plan</code> output</summary>\n
+          \`\`\`text\n`;
+
+          if ("${{ steps.plan.outcome }}" == "success") {
+            comment += `${process.env.PLAN_OUT}`;
+          } else {
+            comment += `${process.env.PLAN_ERR}`;
+          }
+          
+          comment += `
+          \`\`\`\n
+          </details>`;
+
+          return comment;
+
+    - name: Find Comment
+      if: github.event_name == 'pull_request'
+      uses: peter-evans/find-comment@v2
+      id: fc
+      with:
+        comment-author: github-actions[bot]
+        issue-number: ${{ github.event.pull_request.number }}
+        body-includes: '## GCP Terraform Checks'
 
     - name: Create comment
       if: github.event_name == 'pull_request'

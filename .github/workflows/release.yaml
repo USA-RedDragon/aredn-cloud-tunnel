@@ -86,3 +86,38 @@ jobs:
 
       - name: Terraform Apply
         run: cd infra && terraform apply -no-color -auto-approve -var-file=variables.tfvars
+
+  terraform-gcp:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::803205869942:role/github-actions-aredn-cloud-tunnel
+          aws-region: us-east-1
+
+      - name: Configure GCP Credentials
+        uses: google-github-actions/auth@v0.3.1
+        with:
+          create_credentials_file: 'true'
+          workload_identity_provider: 'projects/820302097205/locations/global/workloadIdentityPools/aredn-cloud-tunnel-gcp/providers/github'
+          service_account: 'oidc-service-account@supernode-401805.iam.gserviceaccount.com'
+
+      - name: Terraform Init
+        run: cd infra-gcp && terraform init
+
+      - name: Place secret variables
+        run: |
+          echo "${TFVARS}" | base64 -d > infra-gcp/variables.tfvars
+        env:
+          TFVARS: ${{ secrets.GCP_TFVARS }}
+
+      - name: Terraform Apply
+        run: cd infra-gcp && terraform apply -no-color -auto-approve -var-file=variables.tfvars
