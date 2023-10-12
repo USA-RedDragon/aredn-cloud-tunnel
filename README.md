@@ -1,6 +1,6 @@
 # AREDN Virtual Node
 
-[![Terraform](https://github.com/USA-RedDragon/aredn-cloud-tunnel/actions/workflows/terraform.yaml/badge.svg)](https://github.com/USA-RedDragon/aredn-cloud-tunnel/actions/workflows/terraform.yaml)
+[![Release](https://github.com/USA-RedDragon/aredn-cloud-tunnel/actions/workflows/release.yaml/badge.svg)](https://github.com/USA-RedDragon/aredn-cloud-tunnel/actions/workflows/release.yaml)
 
 This project is intended to set up a "Cloud Tunnel" for the AREDN network. It acts like a node without any RF link capabilities. The purpose is to allow a large group of users to connect to a tunnel prior to RF deployments being rolled out.
 
