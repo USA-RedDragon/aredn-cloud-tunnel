@@ -27,18 +27,6 @@ docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
 docker network create --subnet=10.54.25.0/24 aredn-net
 
-mkdir -p /docker-data
-
-# Try to mount /dev/sdf first, then if it fails, format it
-if ! mount -t ext4 /dev/nvme1n1 /docker-data; then
-    mkfs.ext4 /dev/nvme1n1
-    mount -t ext4 /dev/nvme1n1 /docker-data
-fi
-
-mkdir -p /docker-data/netdata
-chown -R root:201 /docker-data/netdata
-chmod -R g+w /docker-data/netdata
-
 CH="http://${server_name}.local.mesh:81${extra_cors_hosts}"
 
 if [[ "${supernode_zone}" != "" ]]; then
