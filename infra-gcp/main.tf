@@ -47,6 +47,8 @@ resource "google_compute_instance" "default" {
   zone                      = "${var.region}-b"
   allow_stopping_for_update = true
 
+  tags = ["http-server", "https-server"]
+
   boot_disk {
     initialize_params {
       image = data.google_compute_image.ubuntu.self_link
