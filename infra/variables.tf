@@ -4,7 +4,7 @@ variable "region" {
 }
 
 variable "instance-type" {
-  default     = "t4a.small"
+  default     = "t3a.small"
   description = "The AWS instance type to use for the infrastructure"
 }
 
