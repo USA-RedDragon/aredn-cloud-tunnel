@@ -129,17 +129,18 @@ docker run \
 
 docker run \
     --network=container:${server_name} \
-    -v /etc/passwd:/host/etc/passwd:ro \
-    -v /etc/group:/host/etc/group:ro \
-    -v /proc:/host/proc:ro \
-    -v /sys:/host/sys:ro \
-    -v /etc/os-release:/host/etc/os-release:ro \
     --restart unless-stopped \
-    --cap-add SYS_PTRACE \
-    --security-opt apparmor=unconfined \
     -d \
-    -v /docker-data/netdata/etc:/etc/netdata \
-    -v /docker-data/netdata/var:/var/lib/netdata \
-    -v /docker-data/netdata/cache:/var/cache/netdata \
-    --name netdata \
-    netdata/netdata
+    -v /:/host/root \
+    -v /sys:/host/sys \
+    -v /proc:/host/proc \
+    --name node-exporter \
+    -p 9100:9100 \
+    quay.io/prometheus/node-exporter:latest \
+    --path.procfs=/host/proc \
+    --path.sysfs=/host/sys \
+    --path.rootfs=/host/root \
+    --path.udev.data=/host/root/run/udev/data \
+    --web.listen-address=0.0.0.0:9100 \
+    --collector.filesystem.mount-points-exclude='^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)' \
+    --collector.filesystem.fs-types-exclude='^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$'
