@@ -80,7 +80,7 @@ docker run \
     --device /dev/net/tun \
     --name ${server_name}-supernode \
     -p 5526:5525 \
-    -p 81:3333 \
+    -p 80:81 \
     -d \
     --restart unless-stopped \
     --net aredn-net --ip $NODE_IP_PLUS_1 \
