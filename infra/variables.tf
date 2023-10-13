@@ -4,12 +4,12 @@ variable "region" {
 }
 
 variable "instance-type" {
-  default     = "t4g.small"
+  default     = "t4a.small"
   description = "The AWS instance type to use for the infrastructure"
 }
 
 variable "arch" {
-  default     = "arm64"
+  default     = "amd64"
   description = "The CPU architecture to use for the infrastructure"
 }
 
