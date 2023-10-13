@@ -34,11 +34,6 @@ data "aws_ami" "ubuntu-jammy" {
   }
 
   filter {
-    name   = "architecture"
-    values = [var.arch]
-  }
-
-  filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }

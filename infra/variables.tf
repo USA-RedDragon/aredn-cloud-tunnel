@@ -8,11 +8,6 @@ variable "instance-type" {
   description = "The AWS instance type to use for the infrastructure"
 }
 
-variable "arch" {
-  default     = "amd64"
-  description = "The CPU architecture to use for the infrastructure"
-}
-
 variable "server-name" {
   default     = "KI5VMF-CLOUD-TUNNEL"
   description = "The name of the server in mesh status"
