@@ -13,7 +13,7 @@ variable "instance_type" {
 }
 
 variable "server-name" {
-  default     = "KI5VMF-DALLAS-CLOUD-TUNNEL"
+  default     = "KI5VMF-DALLAS-CLOUD"
   description = "The name of the server in mesh status"
 }
 
