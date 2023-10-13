@@ -109,7 +109,7 @@ variable "vtun_starting_address_supernode" {
 }
 
 variable "wireguard_tap_address" {
-  default     = "10.184.4.137"
+  default     = "10.184.4.139"
   description = "The AREDN address to use for the WireGuard interface to tap into the mesh"
 }
 
