@@ -123,7 +123,7 @@ docker run \
     --restart=unless-stopped \
     containrrr/watchtower \
     --cleanup \
-    --interval 3600
+    --interval 60
 
 docker run \
     --network=container:${server_name} \
