@@ -68,6 +68,7 @@ docker run \
     -e VTUN_STARTING_ADDRESS=${vtun_starting_address_supernode} \
     --device /dev/net/tun \
     --name ${server_name}-SUPERNODE \
+    --hostname ${server_name}-SUPERNODE \
     -p 5526:5525 \
     -d \
     --restart unless-stopped \
@@ -99,6 +100,7 @@ docker run \
     -e NODE_IP=${node_ip} \
     --device /dev/net/tun \
     --name ${server_name} \
+    --hostname ${server_name} \
     -p 5525:5525 \
     -p 51820:51820/udp \
     -d \
