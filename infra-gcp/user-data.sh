@@ -55,7 +55,7 @@ docker run \
     -e PASSWORD_SALT='${password_salt}' \
     -e CORS_HOSTS="$CH_SUPERNODE" \
     -e INIT_ADMIN_USER_PASSWORD='${init_admin_user_password}' \
-    -e SERVER_NAME=${server_name}-SUPERNODE \
+    -e SERVER_NAME=${server_name}-supernode \
     -e NODE_IP=$NODE_IP_PLUS_1 \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
@@ -67,8 +67,8 @@ docker run \
     -e SUPERNODE_ZONE=${supernode_zone} \
     -e VTUN_STARTING_ADDRESS=${vtun_starting_address_supernode} \
     --device /dev/net/tun \
-    --name ${server_name}-SUPERNODE \
-    --hostname ${server_name}-SUPERNODE \
+    --name ${server_name}-supernode \
+    --hostname ${server_name}-supernode \
     -p 5526:5525 \
     -d \
     --restart unless-stopped \
@@ -136,7 +136,7 @@ docker run \
     --collector.filesystem.fs-types-exclude='^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$'
 
 docker run \
-    --network=container:${server_name}-SUPERNODE \
+    --network=container:${server_name}-supernode \
     --restart unless-stopped \
     -d \
     -v /:/host/root \
