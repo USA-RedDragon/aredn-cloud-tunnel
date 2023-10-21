@@ -27,18 +27,18 @@ docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
 docker network create --subnet=10.54.25.0/24 aredn-net
 
-CH="http://${server_name}.local.mesh:81${extra_cors_hosts}"
+CH="http://${server_name}.local.mesh${extra_cors_hosts}"
 
 if [[ "${supernode_zone}" != "" ]]; then
-    # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
-    CH="$CH,http://${server_name}.${supernode_zone}.mesh:81"
+    # Add http://${server_name}.${supernode_zone}.mesh to the CH
+    CH="$CH,http://${server_name}.${supernode_zone}.mesh"
 fi
 
-CH_SUPERNODE="http://${server_name}-supernode.local.mesh:81${extra_supernode_cors_hosts}"
+CH_SUPERNODE="http://${server_name}-supernode.local.mesh${extra_supernode_cors_hosts}"
 
 if [[ "${supernode_zone}" != "" ]]; then
-    # Add http://${server_name}.${supernode_zone}.mesh:81 to the CH
-    CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}-supernode.${supernode_zone}.mesh:81"
+    # Add http://${server_name}.${supernode_zone}.mesh to the CH
+    CH_SUPERNODE="$CH_SUPERNODE,http://${server_name}-supernode.${supernode_zone}.mesh"
 fi
 
 export NODE_IP_PLUS_1=$(echo ${node_ip} | awk -F. '{print $1"."$2"."$3"."$4+1}')

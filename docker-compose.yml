@@ -21,7 +21,7 @@ services:
       - PG_PASSWORD=password
       - SESSION_SECRET=changeme
       - PASSWORD_SALT=alsochangeme
-      - CORS_HOSTS=http://localhost:81,http://127.0.0.1:81
+      - CORS_HOSTS=http://localhost,http://127.0.0.1
       - INIT_ADMIN_USER_PASSWORD=changeme
       - SERVER_NAME=cloud-tunnel
       - SERVER_LON=-83
@@ -31,6 +31,6 @@ services:
       - DEBUG=1
     ports:
       - 3333:3333
-      - 81:81
+      - 80:80
 volumes:
   postgres:
