@@ -5,7 +5,7 @@ FROM ghcr.io/usa-reddragon/aredn-base:main@sha256:503ca3f24f0b8f2536e96980d83a6c
 COPY --from=aredn-manager /aredn-manager /usr/bin/aredn-manager
 RUN chmod a+x /usr/bin/aredn-manager
 
-COPY --from=aredn-manager-frontend /usr/share/nginx/html /www/aredn-manager
+COPY --from=aredn-manager-frontend /usr/share/nginx/html /www
 
 RUN mkdir -p /www/map/data
 
