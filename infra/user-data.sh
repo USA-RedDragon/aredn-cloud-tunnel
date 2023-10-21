@@ -56,6 +56,7 @@ docker run \
     -e SERVER_LAT='${server_lat}' \
     -e DISABLE_MAP=1 \
     -e METRICS_PORT='9001' \
+    -e TRUSTED_PROXIES='127.0.0.1' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SUPERNODE=1 \
     -e SUPERNODE_ZONE=${supernode_zone} \
@@ -84,6 +85,7 @@ docker run \
     -e SERVER_LON='${server_lon}' \
     -e SERVER_LAT='${server_lat}' \
     -e METRICS_PORT='9001' \
+    -e TRUSTED_PROXIES='127.0.0.1' \
     -e SERVER_GRIDSQUARE=${server_gridsquare} \
     -e SERVER_NAME=${server_name} \
     -e WIREGUARD_TAP_ADDRESS=${wireguard_tap_address} \
