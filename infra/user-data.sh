@@ -65,6 +65,8 @@ docker run \
     --name ${server_name}-supernode \
     --hostname ${server_name}-supernode \
     -p 5526:5525 \
+    -p 9002:9001 \
+    -p 9100:9100 \
     -d \
     --restart unless-stopped \
     $LOGGING \
@@ -97,6 +99,7 @@ docker run \
     --device /dev/net/tun \
     --name ${server_name} \
     --hostname ${server_name} \
+    -p 9001:9001 \
     -p 5525:5525 \
     -p 51820:51820/udp \
     -d \
