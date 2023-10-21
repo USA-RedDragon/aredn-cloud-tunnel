@@ -1,4 +1,4 @@
-#/bin/sh
+#/bin/bash
 
 # Trap signals and exit
 trap "exit 0" SIGHUP SIGINT SIGTERM
