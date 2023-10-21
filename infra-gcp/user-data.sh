@@ -134,3 +134,20 @@ docker run \
     --web.listen-address=0.0.0.0:9100 \
     --collector.filesystem.mount-points-exclude='^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)' \
     --collector.filesystem.fs-types-exclude='^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$'
+
+docker run \
+    --network=container:${server_name}-SUPERNODE \
+    --restart unless-stopped \
+    -d \
+    -v /:/host/root \
+    -v /sys:/host/sys \
+    -v /proc:/host/proc \
+    --name node-exporter \
+    quay.io/prometheus/node-exporter:latest \
+    --path.procfs=/host/proc \
+    --path.sysfs=/host/sys \
+    --path.rootfs=/host/root \
+    --path.udev.data=/host/root/run/udev/data \
+    --web.listen-address=0.0.0.0:9100 \
+    --collector.filesystem.mount-points-exclude='^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)' \
+    --collector.filesystem.fs-types-exclude='^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$'
