@@ -142,7 +142,7 @@ docker run \
     -v /:/host/root \
     -v /sys:/host/sys \
     -v /proc:/host/proc \
-    --name node-exporter \
+    --name node-exporter-supernode \
     quay.io/prometheus/node-exporter:latest \
     --path.procfs=/host/proc \
     --path.sysfs=/host/sys \
