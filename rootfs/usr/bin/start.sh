@@ -3,6 +3,10 @@
 # Trap signals and exit
 trap "exit 0" SIGHUP SIGINT SIGTERM
 
+ip link add dev br0 type bridge
+ip address add dev br0 $NODE_IP
+ip link set dev eth0 master br0
+
 /usr/bin/blockknownencryption
 
 if [ -z "$SERVER_NAME" ]; then
