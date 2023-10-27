@@ -25,7 +25,7 @@ usermod -aG docker ubuntu
 # Clone this repo
 docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
-docker network create --subnet=10.54.25.0/24 aredn-net
+docker network create aredn-net
 
 CH="http://${server_name}.local.mesh${extra_cors_hosts}"
 
@@ -72,7 +72,7 @@ docker run \
     -p 5526:5525 \
     -d \
     --restart unless-stopped \
-    --net aredn-net --ip $NODE_IP_PLUS_1 \
+    --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
@@ -105,7 +105,7 @@ docker run \
     -p 51820:51820/udp \
     -d \
     --restart unless-stopped \
-    --net aredn-net --ip ${node_ip} \
+    --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
