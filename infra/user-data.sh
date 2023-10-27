@@ -18,7 +18,7 @@ usermod -aG docker ubuntu
 # Clone this repo
 docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
-docker network create --subnet=10.54.25.0/24 aredn-net
+docker network create aredn-net
 
 LOGGING="--log-driver=awslogs --log-opt awslogs-region=${region} --log-opt awslogs-group=${awslogs-group} --log-opt awslogs-create-group=true"
 
@@ -70,7 +70,7 @@ docker run \
     -d \
     --restart unless-stopped \
     $LOGGING \
-    --net aredn-net --ip $NODE_IP_PLUS_1 \
+    --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
@@ -105,7 +105,7 @@ docker run \
     -d \
     --restart unless-stopped \
     $LOGGING \
-    --net aredn-net --ip ${node_ip} \
+    --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
