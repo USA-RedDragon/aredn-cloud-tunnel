@@ -11,6 +11,8 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  # Disable Terraform telemetry
+  CHECKPOINT_DISABLE: "true"
 
 permissions:
   id-token: write      # Required for aws-actions/configure-aws-credentials
