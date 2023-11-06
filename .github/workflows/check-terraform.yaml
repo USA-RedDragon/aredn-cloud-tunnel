@@ -12,6 +12,10 @@ concurrency:
   group: '${{ github.workflow }} @ ${{ github.ref }}'
   cancel-in-progress: false
 
+env:
+  # Disable Terraform telemetry
+  CHECKPOINT_DISABLE: "true"
+
 jobs:
   check-terraform:
     runs-on: ubuntu-22.04
