@@ -86,8 +86,8 @@ jobs:
         env:
           TFVARS: ${{ secrets.TFVARS }}
 
-      - name: Terraform Apply
-        run: cd infra && terraform apply -no-color -auto-approve -var-file=variables.tfvars
+      - name: Terraform Destroy
+        run: cd infra && terraform destroy -no-color -auto-approve -var-file=variables.tfvars
 
   terraform-gcp:
     runs-on: ubuntu-22.04
