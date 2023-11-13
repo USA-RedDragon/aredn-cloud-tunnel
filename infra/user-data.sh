@@ -20,8 +20,6 @@ docker pull ghcr.io/usa-reddragon/aredn-virtual-node:main
 
 docker network create aredn-net
 
-LOGGING="--log-driver=awslogs --log-opt awslogs-region=${region} --log-opt awslogs-group=${awslogs-group} --log-opt awslogs-create-group=true"
-
 CH="http://${server_name}.local.mesh${extra_cors_hosts}"
 
 if [[ "${supernode_zone}" != "" ]]; then
@@ -69,7 +67,6 @@ docker run \
     -p 9100:9100 \
     -d \
     --restart unless-stopped \
-    $LOGGING \
     --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
@@ -104,14 +101,12 @@ docker run \
     -p 51820:51820/udp \
     -d \
     --restart unless-stopped \
-    $LOGGING \
     --net aredn-net \
     ghcr.io/usa-reddragon/aredn-cloud-tunnel:main
 
 docker run \
     -d \
     --name watchtower \
-    $LOGGING \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --restart=unless-stopped \
     containrrr/watchtower \
@@ -125,7 +120,6 @@ docker run \
     -v /:/host/root \
     -v /sys:/host/sys \
     -v /proc:/host/proc \
-    $LOGGING \
     --name node-exporter \
     quay.io/prometheus/node-exporter:latest \
     --path.procfs=/host/proc \
