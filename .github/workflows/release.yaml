@@ -121,5 +121,5 @@ jobs:
         env:
           TFVARS: ${{ secrets.GCP_TFVARS }}
 
-      - name: Terraform Apply
-        run: cd infra-gcp && terraform apply -no-color -auto-approve -var-file=variables.tfvars
+      - name: Terraform Destroy
+        run: cd infra-gcp && terraform destroy -no-color -auto-approve -var-file=variables.tfvars
