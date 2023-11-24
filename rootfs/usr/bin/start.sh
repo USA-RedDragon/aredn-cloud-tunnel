@@ -3,16 +3,7 @@
 # Trap signals and exit
 trap "exit 0" SIGHUP SIGINT SIGTERM
 
-ip link add dev br0 type bridge
-ip address add dev br0 $NODE_IP
-ip link set dev eth0 master br0
-ip link set br0 up
-GW=$(ip route show default | awk '{ print $3 }')
-ADDR=$(ip address show eth0 | grep inet | awk '{ print $2 }')
-ip address add dev br0 $ADDR
-ip route del default
-ip address del dev eth0 $ADDR
-ip route add default via $GW dev br0
+ip address add dev eth0 $NODE_IP
 
 /usr/bin/blockknownencryption
 
