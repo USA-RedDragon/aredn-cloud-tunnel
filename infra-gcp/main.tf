@@ -11,7 +11,7 @@ terraform {
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.19.0"
+      version = "4.20.0"
     }
     tls = {
       source  = "hashicorp/tls"
