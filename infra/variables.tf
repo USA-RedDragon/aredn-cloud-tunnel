@@ -63,11 +63,6 @@ variable "wireguard_server_privatekey" {
   sensitive   = true
 }
 
-variable "map-config-json" {
-  sensitive   = true
-  description = "The map configuration JSON for the server"
-}
-
 variable "server-gridsquare" {
   sensitive   = true
   description = "The grid square of the server"

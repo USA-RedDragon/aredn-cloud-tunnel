@@ -7,8 +7,6 @@ RUN chmod a+x /usr/bin/aredn-manager
 
 COPY --from=aredn-manager-frontend /usr/share/nginx/html /www
 
-RUN mkdir -p /www/map/data
-
 RUN apk add --no-cache \
     nginx
 

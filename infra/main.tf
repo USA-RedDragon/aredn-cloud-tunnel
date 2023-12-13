@@ -58,7 +58,6 @@ resource "aws_instance" "node" {
     server_lon                      = var.server-lon
     server_lat                      = var.server-lat
     server_gridsquare               = var.server-gridsquare
-    map_config_json                 = var.map-config-json
     wireguard_tap_address           = var.wireguard_tap_address
     region                          = var.region
     wireguard_peer_publickey        = var.wireguard_peer_publickey
