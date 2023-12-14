@@ -27,7 +27,7 @@ services:
       - SERVER_GRIDSQUARE=KA97xa
       - DEBUG=1
     ports:
-      - 3333:3333
+      - 5525:5525
       - 80:80
 volumes:
   postgres:
