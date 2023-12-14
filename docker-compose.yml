@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
   aredn-manager:
-    build: .
+    image: ghcr.io/usa-reddragon/aredn-cloud-tunnel:v0.0.1
     restart: unless-stopped
     privileged: true
     environment:
