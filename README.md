@@ -10,7 +10,7 @@ It should be noted that in a disaster situation, it's likely that the internet w
 
 ## Quick links
 
-- [FAQs](https://github.com/USA-RedDragon/DMRHub/wiki/FAQ)
+- [FAQs](https://github.com/USA-RedDragon/aredn-cloud-tunnel/wiki/FAQ)
 - [Environment Variables](https://github.com/USA-RedDragon/aredn-cloud-tunnel/wiki/Environment-Variables)
 - [Deployment Guide](https://github.com/USA-RedDragon/aredn-cloud-tunnel/wiki/Deployment-Guide)
 - [Admin's Guide](https://github.com/USA-RedDragon/aredn-cloud-tunnel/wiki/Admin's-Guide)
