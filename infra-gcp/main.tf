@@ -18,7 +18,7 @@ terraform {
       version = "4.0.5"
     }
   }
-  required_version = ">= 1.6.6"
+  required_version = ">= 1.7.0"
 }
 
 provider "google" {
