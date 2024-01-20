@@ -12,6 +12,10 @@ RUN apk add --no-cache \
 
 COPY --chown=root:root rootfs /
 
+# AREDN Manager runs these on its own
+RUN rm -rf /etc/s6/olsrd
+RUN rm -rf /etc/s6/vtund
+
 # Expose ports.
 EXPOSE 5525
 
