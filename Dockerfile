@@ -1,5 +1,5 @@
-FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.174 as aredn-manager
-FROM ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.174 as aredn-manager-frontend
+FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.175 as aredn-manager
+FROM ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.175 as aredn-manager-frontend
 FROM ghcr.io/usa-reddragon/aredn-base:main@sha256:9fc5160e6f17a949de2f53facb86b7096e497bab0fa9116f633a9a52c770ee9f
 
 COPY --from=aredn-manager /aredn-manager /usr/bin/aredn-manager
