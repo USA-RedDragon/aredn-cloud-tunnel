@@ -14,6 +14,12 @@ ip route del default
 ip address del dev eth0 $ADDR
 ip route add default via $GW dev br0
 
+IS_DISABLE_VTUN=${DISABLE_VTUN:-0}
+
+if [ "$IS_DISABLE_VTUN" -eq 1 ]; then
+    rm -rf /etc/s6/vtund
+fi
+
 /usr/bin/blockknownencryption
 
 if [ -z "$SERVER_NAME" ]; then
