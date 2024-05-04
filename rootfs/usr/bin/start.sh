@@ -20,8 +20,6 @@ if [ "$IS_DISABLE_VTUN" -eq 1 ]; then
     rm -rf /etc/s6/vtund
 fi
 
-/usr/bin/blockknownencryption
-
 if [ -z "$SERVER_NAME" ]; then
     echo "No server name provided, exiting"
     exit 1
