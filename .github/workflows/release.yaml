@@ -107,7 +107,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Configure GCP Credentials
-        uses: google-github-actions/auth@v2.1.2
+        uses: google-github-actions/auth@v2.1.3
         with:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/820302097205/locations/global/workloadIdentityPools/aredn-cloud-tunnel-gcp/providers/github'
