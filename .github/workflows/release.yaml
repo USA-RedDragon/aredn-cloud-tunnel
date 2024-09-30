@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   docker:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -65,7 +65,7 @@ jobs:
           cache-to: type=gha,mode=max
 
   terraform:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -93,7 +93,7 @@ jobs:
         run: cd infra && terraform destroy -no-color -auto-approve -var-file=variables.tfvars
 
   terraform-gcp:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
