@@ -18,7 +18,7 @@ env:
 
 jobs:
   check-terraform:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./infra
@@ -165,7 +165,7 @@ jobs:
       run: exit 1
 
   check-gcp-terraform:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ./infra-gcp
