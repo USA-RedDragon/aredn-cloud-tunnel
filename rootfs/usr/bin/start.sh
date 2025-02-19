@@ -10,7 +10,7 @@ ip link set br0 up
 GW=$(ip route show default | awk '{ print $3 }')
 ADDR=$(ip address show eth0 | grep inet | awk '{ print $2 }')
 ip address add dev br0 $ADDR
-ip -6 addr add $(aredn-manager address -r)/128 dev eth1
+ip -6 addr add dev br0 $(aredn-manager address -r)/128
 ip route del default
 ip address del dev eth0 $ADDR
 ip route add default via $GW dev br0
