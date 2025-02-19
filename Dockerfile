@@ -15,6 +15,7 @@ COPY --chown=root:root rootfs /
 
 # AREDN Manager runs OLSRD on its own
 RUN rm -rf /etc/s6/olsrd
+RUN rm -rf /etc/s6/babeld
 
 # Expose ports.
 EXPOSE 5525
