@@ -30,7 +30,7 @@ if [ -n "$SUPERNODE" ]; then
     ip route add blackhole 10.0.0.0/8 table 21
 fi
 
-ip address add dev br-dtdlink $NODE_IP/8
+ip address add dev br-dtdlink $NODE_IP/24
 
 ip route del default
 ip route add default via $GW dev br0
