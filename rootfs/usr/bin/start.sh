@@ -10,6 +10,7 @@ ip link set br0 up
 ip link add link br0 name br0.2 type vlan id 2
 ip link add dev br-dtdlink type bridge
 ip link set dev br0.2 master br-dtdlink
+ip link set br0.2 up
 ip link set br-dtdlink up
 
 GW=$(ip route show default | awk '{ print $3 }')
@@ -24,6 +25,8 @@ for IPV6_ADDR in $IPV6_ADDRS; do
     ip address add dev br0 $IPV6_ADDR
     ip address del dev eth0 $IPV6_ADDR
 done
+
+ip address add dev br-dtdlink $NODE_IP
 
 ip route del default
 ip route add default via $GW dev br0
