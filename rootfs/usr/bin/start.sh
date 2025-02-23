@@ -24,6 +24,10 @@ for IPV4_ADDR in $IPV4_ADDRS; do
 done
 IPV6_ADDRS=$(ip address show eth0 | grep 'inet6 ' | awk '{ print $2 }')
 for IPV6_ADDR in $IPV6_ADDRS; do
+    # Make sure we don't add the link-local address
+    if [[ $IPV6_ADDR == fe80:* ]]; then
+        continue
+    fi
     ip address add dev br0 $IPV6_ADDR
     ip address del dev eth0 $IPV6_ADDR
 done
