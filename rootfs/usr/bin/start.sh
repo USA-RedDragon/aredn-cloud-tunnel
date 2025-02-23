@@ -64,6 +64,11 @@ if [ -z "$SERVER_LAT" ]; then
     exit 1
 fi
 
+BABEL_DEBUG=${BABEL_DEBUG:-false}
+if [ "$BABEL_DEBUG" == "true" ]; then
+    echo "debug 1" >> /etc/babeld.conf
+fi
+
 # Run the AREDN manager
 aredn-manager -d generate
 
