@@ -32,6 +32,7 @@ for IPV6_ADDR in $IPV6_ADDRS; do
     ip address del dev eth0 $IPV6_ADDR
 done
 
+SUPERNODE=${SUPERNODE:-}
 if [ -n "$SUPERNODE" ]; then
     ip route add blackhole 10.0.0.0/8 table 21
 fi
@@ -47,21 +48,27 @@ if [ "$IS_DISABLE_VTUN" -eq 1 ]; then
     rm -rf /etc/s6/vtund
 fi
 
+SERVER_NAME=${SERVER_NAME:-}
 if [ -z "$SERVER_NAME" ]; then
     echo "No server name provided, exiting"
     exit 1
 fi
 
+SERVER_LON=${SERVER_LON:-}
 if [ -z "$SERVER_LON" ]; then
     echo "No server longitude provided, exiting"
     exit 1
 fi
 
+SERVER_LAT=${SERVER_LAT:-}
 if [ -z "$SERVER_LAT" ]; then
     echo "No server latitude provided, exiting"
     exit 1
 fi
 
+WIREGUARD_TAP_ADDRESS=${WIREGUARD_TAP_ADDRESS:-}
+WIREGUARD_SERVER_PRIVATEKEY=${WIREGUARD_SERVER_PRIVATEKEY:-}
+WIREGUARD_PEER_PUBLICKEY=${WIREGUARD_PEER_PUBLICKEY:-}
 if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
     export WG_TAP_PLUS_1=$(echo $WIREGUARD_TAP_ADDRESS | awk -F. '{print $1"."$2"."$3"."$4+1}')
 
