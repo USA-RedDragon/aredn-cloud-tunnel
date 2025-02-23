@@ -39,11 +39,9 @@ fi
 
 ip address add dev br-dtdlink $NODE_IP/24
 
-ip route del default
 ip route add default via $GW dev br0
 
 IS_DISABLE_VTUN=${DISABLE_VTUN:-0}
-
 if [ "$IS_DISABLE_VTUN" -eq 1 ]; then
     rm -rf /etc/s6/vtund
 fi
@@ -64,37 +62,6 @@ SERVER_LAT=${SERVER_LAT:-}
 if [ -z "$SERVER_LAT" ]; then
     echo "No server latitude provided, exiting"
     exit 1
-fi
-
-WIREGUARD_TAP_ADDRESS=${WIREGUARD_TAP_ADDRESS:-}
-WIREGUARD_SERVER_PRIVATEKEY=${WIREGUARD_SERVER_PRIVATEKEY:-}
-WIREGUARD_PEER_PUBLICKEY=${WIREGUARD_PEER_PUBLICKEY:-}
-if ! [ -z "$WIREGUARD_TAP_ADDRESS" ]; then
-    export WG_TAP_PLUS_1=$(echo $WIREGUARD_TAP_ADDRESS | awk -F. '{print $1"."$2"."$3"."$4+1}')
-
-    ip link add dev wg0 type wireguard
-    ip address add dev wg0 ${WIREGUARD_TAP_ADDRESS}/32
-
-    mkdir -p /etc/wireguard/keys
-
-    echo "${WIREGUARD_SERVER_PRIVATEKEY}" | tee /etc/wireguard/keys/server.key | wg pubkey > /etc/wireguard/keys/server.pub
-
-    wg set wg0 peer ${WIREGUARD_PEER_PUBLICKEY} allowed-ips 10.0.0.0/8
-
-    chmod 400 /etc/wireguard/keys/*
-
-    wg set wg0 listen-port 51820 private-key /etc/wireguard/keys/server.key
-
-    # Cross-VPN traffic OK
-    iptables -A FORWARD -i wg0 -o wg0 -j ACCEPT
-    iptables -A FORWARD -o wg0 -p tcp --tcp-flags SYN SYN -j TCPMSS --set-mss 1420
-
-    iptables -t mangle -A PREROUTING -i wg0 -j MARK --set-mark 0x30
-    iptables -t nat -A POSTROUTING ! -o wg0 -m mark --mark 0x30 -j MASQUERADE
-
-    ip route add ${WG_TAP_PLUS_1}/32 dev wg0
-
-    ip link set wg0 up
 fi
 
 # Run the AREDN manager
