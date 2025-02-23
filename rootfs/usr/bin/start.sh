@@ -66,7 +66,7 @@ fi
 
 BABEL_DEBUG=${BABEL_DEBUG:-false}
 if [ "$BABEL_DEBUG" == "true" ]; then
-    echo "debug 1" >> /etc/babeld.conf
+    echo "debug 1" >> /etc/babel.conf
 fi
 
 # Run the AREDN manager
