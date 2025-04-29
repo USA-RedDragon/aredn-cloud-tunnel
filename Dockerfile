@@ -1,6 +1,6 @@
 FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.266 as aredn-manager
 FROM ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.266 as aredn-manager-frontend
-FROM ghcr.io/usa-reddragon/aredn-base:main@sha256:969232a4b0f0cc468272ad10db9cd4ea44759e2f052ae2ccc9cbcac21c35a827
+FROM ghcr.io/usa-reddragon/aredn-base:main@sha256:bd920450cc5a07c70f9cc654c393c440539b883edc470272bd2a2291213780b5
 
 COPY --from=aredn-manager /aredn-manager /usr/bin/aredn-manager
 RUN chmod a+x /usr/bin/aredn-manager
