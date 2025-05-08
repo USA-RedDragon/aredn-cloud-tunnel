@@ -1,4 +1,4 @@
-FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.266 as aredn-manager
+FROM ghcr.io/usa-reddragon/aredn-manager:v0.0.267 as aredn-manager
 FROM ghcr.io/usa-reddragon/aredn-manager-frontend:v0.0.266 as aredn-manager-frontend
 FROM ghcr.io/usa-reddragon/aredn-base:main@sha256:bd920450cc5a07c70f9cc654c393c440539b883edc470272bd2a2291213780b5
 
