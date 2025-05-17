@@ -69,6 +69,10 @@ if [ "$BABEL_DEBUG" == "true" ]; then
     echo "debug 1" >> /etc/babel.conf
 fi
 
+mkdir -p /etc/arednlink
+echo "${NODE_IP} ${SERVER_NAME}" >> /etc/arednlink/hosts
+touch /etc/arednlink/services
+
 # Run the AREDN manager
 aredn-manager -d generate
 
