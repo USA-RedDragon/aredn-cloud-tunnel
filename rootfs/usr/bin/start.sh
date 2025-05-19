@@ -41,34 +41,6 @@ ip address add dev br-dtdlink $NODE_IP/24
 
 ip route add default via $GW dev br0
 
-IS_DISABLE_VTUN=${DISABLE_VTUN:-0}
-if [ "$IS_DISABLE_VTUN" -eq 1 ]; then
-    rm -rf /etc/s6/vtund
-fi
-
-SERVER_NAME=${SERVER_NAME:-}
-if [ -z "$SERVER_NAME" ]; then
-    echo "No server name provided, exiting"
-    exit 1
-fi
-
-SERVER_LON=${SERVER_LON:-}
-if [ -z "$SERVER_LON" ]; then
-    echo "No server longitude provided, exiting"
-    exit 1
-fi
-
-SERVER_LAT=${SERVER_LAT:-}
-if [ -z "$SERVER_LAT" ]; then
-    echo "No server latitude provided, exiting"
-    exit 1
-fi
-
-BABEL_DEBUG=${BABEL_DEBUG:-false}
-if [ "$BABEL_DEBUG" == "true" ]; then
-    echo "debug 1" >> /etc/babel.conf
-fi
-
 mkdir -p /etc/arednlink
 echo "${NODE_IP} ${SERVER_NAME}" >> /etc/arednlink/hosts
 touch /etc/arednlink/services
