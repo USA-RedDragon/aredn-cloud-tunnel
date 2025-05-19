@@ -46,7 +46,7 @@ echo "${NODE_IP} ${SERVER_NAME}" >> /etc/arednlink/hosts
 touch /etc/arednlink/services
 
 # Run the AREDN manager
-aredn-manager -d generate
+aredn-manager generate
 
 # We need the syslog started early
 rsyslogd -n &
