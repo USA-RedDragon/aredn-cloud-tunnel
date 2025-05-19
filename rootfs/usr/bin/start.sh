@@ -36,7 +36,7 @@ IP6_GW=$(ip -6 route show default | awk '{ print $3 }')
 IPV4_ADDRS=$(ip address show eth0 | grep 'inet ' | awk '{ print $2 }')
 for IPV4_ADDR in $IPV4_ADDRS; do
     ip address del dev eth0 $IPV4_ADDR
-    ip address add dev br-wan $IPV4_ADDR
+    ip address add dev br0 $IPV4_ADDR
 done
 IPV6_ADDRS=$(ip address show eth0 | grep 'inet6 ' | awk '{ print $2 }')
 for IPV6_ADDR in $IPV6_ADDRS; do
@@ -45,11 +45,11 @@ for IPV6_ADDR in $IPV6_ADDRS; do
         continue
     fi
     ip address del dev eth0 $IPV6_ADDR
-    ip address add dev br-wan $IPV6_ADDR
+    ip address add dev br0 $IPV6_ADDR
 done
 
-ip route add default via $GW dev br-wan
-ip -6 route add default via $IP6_GW dev br-wan
+ip route add default via $GW dev br0
+# ip -6 route add default via $IP6_GW dev br-wan
 
 SUPERNODE=${SUPERNODE:-}
 if [ -n "$SUPERNODE" ]; then
