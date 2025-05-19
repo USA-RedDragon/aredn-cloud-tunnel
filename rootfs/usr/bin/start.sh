@@ -31,6 +31,7 @@ ip link set br0.4 up
 ip link set br-wan up
 
 GW=$(ip route show default | awk '{ print $3 }')
+IP6_GW=$(ip -6 route show default | awk '{ print $3 }')
 
 IPV4_ADDRS=$(ip address show eth0 | grep 'inet ' | awk '{ print $2 }')
 for IPV4_ADDR in $IPV4_ADDRS; do
@@ -48,6 +49,7 @@ for IPV6_ADDR in $IPV6_ADDRS; do
 done
 
 ip route add default via $GW dev br-wan
+ip -6 route add default via $IP6_GW dev br-wan
 
 SUPERNODE=${SUPERNODE:-}
 if [ -n "$SUPERNODE" ]; then
