@@ -39,12 +39,13 @@ SUPERNODE=${SUPERNODE:-}
 if [ -n "$SUPERNODE" ]; then
     ip route add blackhole 10.0.0.0/8 table 21
 fi
-
 ip address add dev br-dtdlink $NODE_IP/8
 
 mkdir -p /etc/arednlink
 echo "${NODE_IP} ${SERVER_NAME}" >> /etc/arednlink/hosts
 touch /etc/arednlink/services
+
+sleep 5
 
 # Run the AREDN manager
 aredn-manager generate
